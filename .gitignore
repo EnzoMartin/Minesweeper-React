@@ -1,0 +1,6 @@
+public
+node_modules
+.idea
+sessions
+npm-debug.log
+application.zip

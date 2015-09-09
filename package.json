@@ -1,0 +1,70 @@
+{
+  "name": "minesweeper-react",
+  "version": "1.0.0",
+  "description": "Minesweeper clone in React",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:EnzoMartin/Minesweeper-React.git"
+  },
+  "engines": {
+    "node": ">=0.10.3 <0.11"
+  },
+  "author": "Enzo Martin <enzo.r.martin@gmail.com>",
+  "contributors": [
+    {
+      "name": "Enzo Martin",
+      "email": "enzo.r.martin@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "async": "0.x.x",
+    "body-parser": "^1.13.2",
+    "cookie": "0.x.x",
+    "cookie-parser": "1.x.x",
+    "express": "^4.13.1",
+    "express-session": "^1.11.3",
+    "express-winston": "^0.3.1",
+    "lodash": "^3.7.0",
+    "moment": "2.x.x",
+    "node-uuid": "^1.4.3",
+    "passport": "0.x.x",
+    "passport.socketio": "3.x.x",
+    "session-file-store": "0.0.14",
+    "socket.io": "1.x.x",
+    "superagent": "^1.1.0",
+    "winston": "^1.0.1"
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^1.2.0",
+    "bootstrap-sass": "^3.3.5",
+    "css-loader": "^0.12.0",
+    "envify": "3.x.x",
+    "file-loader": "^0.8.1",
+    "flux": "^2.0.3",
+    "font-awesome": "4.x.x",
+    "form-serialize": "0.x.x",
+    "grunt": "0.4.x",
+    "grunt-contrib-compress": "0.x.x",
+    "grunt-webpack": "^1.0.8",
+    "json-loader": "^0.5.1",
+    "jsx-loader": "^0.13.2",
+    "load-grunt-tasks": "3.x.x",
+    "node-sass": "3.x.x",
+    "react": "^0.13.2",
+    "react-bootstrap": "0.x.x",
+    "react-router": "^0.13.3",
+    "sass-loader": "1.x.x",
+    "socket.io-client": "1.x.x",
+    "strict-loader": "^0.1.2",
+    "style-loader": "^0.12.1",
+    "transform-loader": "0.x.x",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.8.10",
+    "webpack-dev-server": "^1.8.2"
+  }
+}
