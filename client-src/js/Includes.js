@@ -12,4 +12,6 @@ _.each(Items,function(item,id){
     sheet.insertRule('.item.' + id + ' {width:' + item.width +'px; height: ' + item.height + 'px;}',0);
 });
 
+document.getElementById('shortcut-icon').href = require('../img/favicon.ico');
+
 module.exports = {};
