@@ -1,0 +1,4 @@
+module.exports = {
+    REQUEST_MUTEX: 'REQUEST_MUTEX',
+    RELEASE_MUTEX: 'RELEASE_MUTEX'
+};

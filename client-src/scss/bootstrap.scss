@@ -1,0 +1,54 @@
+// Core variables and mixins
+@import "variables";
+@import "_bootstrap";
+
+
+.table {
+    .table {
+        background: transparent;
+    }
+
+    &.table-no-border {
+        tbody {
+            td,
+            th {
+                border: none;
+            }
+        }
+    }
+
+    &.table-no-margin {
+        margin: 0;
+    }
+}
+
+.text-italic {
+    font-style: italic;
+}
+
+.badge + .btn {
+    margin-left: 5px;
+}
+
+.breadcrumb > li + li:before {
+    content: "/\00a0";
+    padding: 0 1px 0 6px;
+}
+
+.btn-sm {
+    .badge {
+        font-size:10px;
+        padding: 2px 5px;
+    }
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    padding-bottom: 90px;
+    min-height: 100%;
+    font-family: 'Arial', sans-serif;
+}

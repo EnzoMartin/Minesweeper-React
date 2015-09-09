@@ -1,0 +1,14 @@
+// Used for all our SCSS file imports
+
+// External dependencies
+@import "variables";
+@import "../../node_modules/font-awesome/scss/font-awesome";
+@import "bootstrap";
+
+// Styles
+@import "mixins";
+@import "global";
+@import "layout";
+@import "table";
+@import "login";
+@import "game";

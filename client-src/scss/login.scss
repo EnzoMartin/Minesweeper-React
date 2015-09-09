@@ -1,0 +1,36 @@
+#login {
+    height: 100%;
+
+    > .container-fluid {
+        height: 100%;
+
+        > .row,
+        .main,
+        .wrapper {
+            height: 100%;
+        }
+    }
+
+    table {
+        margin: 0;
+        height: 100%;
+    }
+
+    td {
+        vertical-align: middle;
+        border: none;
+        padding: 0;
+    }
+
+    .panel {
+        margin: 0;
+    }
+
+    hr {
+        margin: 10px 0;
+    }
+
+    h2 {
+        margin: 0;
+    }
+}
