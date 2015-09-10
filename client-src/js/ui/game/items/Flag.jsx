@@ -1,7 +1,7 @@
 var React = require('react');
-var ItemActions = require('../../../app/game/ItemsActions');
+var ItemsActions = require('../../../app/game/ItemsActions');
 
-var Item = React.createClass({
+var Flag = React.createClass({
     propTypes: {
         item: React.PropTypes.object.isRequired
     },
@@ -10,7 +10,7 @@ var Item = React.createClass({
         event.stopPropagation();
         event.returnValue = false;
         if(!this.props.item.isRevealed){
-            ItemActions.toggleFlag(this.props.item);
+            ItemsActions.toggleFlag(this.props.item);
         }
     },
     render: function(){
@@ -20,4 +20,4 @@ var Item = React.createClass({
     }
 });
 
-module.exports = Item;
+module.exports = Flag;

@@ -101,6 +101,22 @@ function revealItem(item){
     }
 }
 
+function revealAllItems(){
+    var transaction = data.items.transaction();
+    data.items.forEach(function(item){
+        if(!item.isRevealed){
+            var model = item.shallowClone();
+            model.isRevealed = true;
+            model.isFlag = false;
+            transaction.update(item.id,new ItemsModelFactories.ItemModel(model))
+        }
+    });
+    data.items = transaction.commit();
+
+    buildMap();
+    ItemsStore.emitChange();
+}
+
 /**
  * Delete by the given ID
  * @param payload
@@ -131,7 +147,7 @@ function _dispatcher(payload){
             ItemsStore.emitChange();
             break;
         case ItemsConstants.REVEAL_ALL_ITEMS:
-
+            revealAllItems();
             ItemsStore.emitChange();
             break;
         case ItemsConstants.REVEAL_ITEM:

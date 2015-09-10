@@ -4,36 +4,14 @@ var ItemsModelFactory = require('./ItemsModelFactories');
 var Dispatcher = require('../../modules/Dispatcher');
 
 module.exports = {
-    playerSelectedItemPlacer: function(item){
+    gameOver: function(){
         Dispatcher.dispatch({
-            actionType: PlayerConstants.BEGIN_PLAYER_PLACE_ITEM,
-            arguments: {
-                ghost: ItemsModelFactory.createGhost(item)
-            }
+            actionType: PlayerConstants.GAME_OVER
         });
     },
-    playerSelectedTool: function(item){
+    gameWon: function(){
         Dispatcher.dispatch({
-            actionType: PlayerConstants.BEGIN_PLAYER_USE_TOOL,
-            arguments: {
-                tool: ItemsModelFactory.createTool(item)
-            }
-        });
-    },
-    playerDeleteItem: function(id){
-        Dispatcher.dispatch({
-            actionType: PlayerConstants.END_PLAYER_DELETE_ITEM_SUCCESS,
-            arguments: {
-                id: id
-            }
-        });
-    },
-    playerPlacedItem: function(item){
-        Dispatcher.dispatch({
-            actionType: PlayerConstants.END_PLAYER_PLACE_ITEM_SUCCESS,
-            arguments: {
-                items: [new ItemsModelFactory.ItemModel(item)]
-            }
+            actionType: PlayerConstants.GAME_WON
         });
     },
     mouseEnter: function(x,y){

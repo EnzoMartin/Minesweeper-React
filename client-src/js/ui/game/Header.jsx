@@ -9,7 +9,7 @@ var Serialize = require('form-serialize');
 
 var Util = require('../../app/util/Format');
 
-var HUDIndex = React.createClass({
+var Header = React.createClass({
     getInitialState: function () {
         return {
             hasFetched: ItemStore.hasFetched(),
@@ -82,4 +82,4 @@ var HUDIndex = React.createClass({
     }
 });
 
-module.exports = HUDIndex;
+module.exports = Header;
