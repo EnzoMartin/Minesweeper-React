@@ -63,15 +63,15 @@ var Header = React.createClass({
                     <form className="navbar-form navbar-right" role="search" onSubmit={this._onSubmit}>
                         <div className="form-group">
                             <p className="form-control-static pull-left">Difficulty:</p>
-                            <select className="form-control" name="difficulty" defaultValue={this.state.options.difficulty}>
-                                <option>Select difficulty</option>
+                            <select className="form-control" name="difficulty" required={true} defaultValue={this.state.options.difficulty}>
+                                <option value="">Select difficulty</option>
                                 {difficulties}
                             </select>
                         </div>
                         <div className="form-group">
-                            <input type="number" min="1" className="form-control" name="height" defaultValue={this.state.options.height} placeholder="Height" style={{width:80}}/>
+                            <input type="number" min="1" className="form-control" name="height" required={true} defaultValue={this.state.options.height} placeholder="Height" style={{width:80}}/>
                             <p className="form-control-static">Row(s) by</p>
-                            <input type="number" min="1" className="form-control" name="width" defaultValue={this.state.options.width} placeholder="Width" style={{width:80}}/>
+                            <input type="number" min="1" className="form-control" name="width" required={true} defaultValue={this.state.options.width} placeholder="Width" style={{width:80}}/>
                             <p className="form-control-static">Column(s)</p>
                             <button className="btn btn-primary" type="submit">Play!</button>
                         </div>
