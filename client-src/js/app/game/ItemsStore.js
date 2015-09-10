@@ -120,6 +120,7 @@ function _dispatcher(payload){
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isFetching = false;
             data.options = payload.arguments.options;
+            data.flags = [];
             updateAllItems(payload);
             data.hasFetched = true;
             persistAndEmitChange();
