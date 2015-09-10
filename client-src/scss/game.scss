@@ -1,29 +1,63 @@
 #game {
     position: relative;
-    overflow: hidden;
-    min-height: 500px;
-    height: 100%;
-    width: 100%;
     user-select: none;
 
     #stage {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-width: 1000px;
-        min-height: 1000px;
+        #items {
+            margin: 0;
+        }
 
         .item {
-            position: absolute;
-        }
-    }
+            border: 1px solid #000;
+            background: #CCC;
+            vertical-align: middle;
+            text-align: center;
 
-    #hud {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        min-height: 50px;
-        border-top: 1px solid #000;
-        background: #FFF;
+            &.hidden {
+                &:hover {
+                    background: #999;
+                    cursor: pointer;
+                }
+            }
+
+            i {
+                margin: 0;
+            }
+
+            &.flag {
+
+            }
+
+            &.revealed {
+                background: #FFF;
+
+                &.bombs-1 {
+                    color: blue;
+                }
+
+                &.bombs-2,
+                &.bombs-3 {
+                    color: green;
+                }
+
+                &.bombs-4,
+                &.bombs-5 {
+                    color: yellow;
+                }
+
+                &.bombs-6,
+                &.bombs-7 {
+                    color: orange;
+                }
+
+                &.bombs-8 {
+                    color: red;
+                }
+
+                &.bomb {
+                    background: red;
+                }
+            }
+        }
     }
 }
