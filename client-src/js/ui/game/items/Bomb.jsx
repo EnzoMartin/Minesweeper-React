@@ -1,6 +1,7 @@
 var React = require('react');
 var ItemsActions = require('../../../app/game/ItemsActions');
 var PlayerActions = require('../../../app/game/PlayerActions');
+var ItemsStore = require('../../../app/game/ItemsStore');
 
 var Bomb = React.createClass({
     propTypes: {
@@ -20,11 +21,11 @@ var Bomb = React.createClass({
     },
     render: function() {
         var item = this.props.item;
-        var revealedClass = item.isRevealed? ' revealed' : '';
-        var icon = item.isRevealed? (<i className="fa fa-bomb"/>) : (<i className="fa fa-bomb"/>);
+        var revealedClass = item.isRevealed? ' bomb revealed' : '';
+        var icon = item.isRevealed? (<i className="fa fa-bomb"/>) : null;
 
         return (
-            <td className={'item bomb' + revealedClass} onContextMenu={this.flagItem} onClick={this.gameOver}>{icon}</td>
+            <td className={'item ' + revealedClass} onContextMenu={this.flagItem} onClick={this.gameOver}>{icon}</td>
         );
     }
 });
