@@ -26,6 +26,17 @@ module.exports = {
             arguments: ItemsModelFactories.generateGame(width,height,difficulty)
         });
     },
+    toggleFlag: function(item){
+        var model = item.shallowClone();
+        model.isFlag = !model.isFlag;
+
+        Dispatcher.dispatch({
+            actionType: ItemsConstants.TOGGLE_ITEM_FLAG,
+            arguments: {
+                items: [new ItemsModelFactories.ItemModel(model)]
+            }
+        });
+    },
     revealItem: function(item){
         Dispatcher.dispatch({
             actionType: ItemsConstants.REVEAL_ITEM,

@@ -12,6 +12,7 @@ var ItemsStore = RegisteredStore.create('ItemsStore');
 var data = {
     isFetching:false,
     map:[[]],
+    flags:[],
     items:Immutable.Dictionary(),
     options:new Immutable.Model()
 };
@@ -135,6 +136,15 @@ function _dispatcher(payload){
         case ItemsConstants.REVEAL_ITEM:
             revealItem(payload.arguments.items[0]);
             break;
+        case ItemsConstants.TOGGLE_ITEM_FLAG:
+            updateSomeItems(payload);
+
+            data.flags = data.items.filter(function(item){
+                return item.isFlag;
+            });
+
+            ItemsStore.emitChange();
+            break;
     }
 
     return true;
@@ -158,6 +168,9 @@ module.exports = ItemsStore.assign({
     },
     getOptions:function(){
         return data.options;
+    },
+    getFlags:function(){
+        return data.flags;
     },
     getById:function(id){
         return data.items.index(id);

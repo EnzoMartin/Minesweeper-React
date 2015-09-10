@@ -14,7 +14,8 @@ var HUDIndex = React.createClass({
         return {
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
-            options: ItemStore.getOptions()
+            options: ItemStore.getOptions(),
+            placedFlags: ItemStore.getFlags().length
         };
     },
     componentDidMount: function () {
@@ -29,7 +30,8 @@ var HUDIndex = React.createClass({
         this.setState({
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
-            options: ItemStore.getOptions()
+            options: ItemStore.getOptions(),
+            placedFlags: ItemStore.getFlags().length
         });
     },
     _onSubmit: function(event){
@@ -49,7 +51,12 @@ var HUDIndex = React.createClass({
         return (
             <header className="navbar navbar-inverse navbar-static-top">
                 <div className="container-fluid">
-                    <p className="navbar-text navbar-left"><i className="fa fa-bomb"/><strong>Remaining Bombs:</strong> {this.state.options.totalBombs}</p>
+                    <p className="navbar-text navbar-left">
+                        <i className="fa fa-bomb"/><strong>Total Bombs:</strong> {this.state.options.totalBombs}
+                    </p>
+                    <p className="navbar-text navbar-left">
+                        <i className="fa fa-flag"/><strong>Flags Placed:</strong> {this.state.placedFlags} of {this.state.options.totalBombs}
+                    </p>
                     <form className="navbar-form navbar-right" role="search" onSubmit={this._onSubmit}>
                         <div className="form-group">
                             <p className="form-control-static pull-left">Difficulty:</p>
