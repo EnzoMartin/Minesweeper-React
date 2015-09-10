@@ -1,5 +1,6 @@
 var React = require('react');
 var Items = require('./items/Items');
+var Modal = require('./Modal');
 var PlayerActions = require('../../app/game/PlayerActions');
 
 var offsetLeft = 0;
@@ -87,6 +88,7 @@ var GameIndex = React.createClass({
                 <tr>
                     <td id="stage">
                         <Items/>
+                        <Modal/>
                     </td>
                 </tr>
             </table>

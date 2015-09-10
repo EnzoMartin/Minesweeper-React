@@ -6,12 +6,13 @@ var Immutable = require('../../modules/immutable');
 var Definitions = require('../../../../config/Definitions');
 var _ = require('lodash');
 
-var ItemsStore = RegisteredStore.create('ItemsStore');
+var PlayerStore = RegisteredStore.create('PlayerStore');
 
 var data = {
     generatedMap:false,
     timeElapsed:0,
-    lost:false
+    isGameOver:false,
+    hasWon:false
 };
 
 /**
@@ -19,7 +20,7 @@ var data = {
  */
 function persistAndEmitChange(){
     localStorage.setItem('player',JSON.stringify(data.items.values));
-    ItemsStore.emitChange();
+    PlayerStore.emitChange();
 }
 
 /**
@@ -46,23 +47,35 @@ function updateAllItems(payload,mergeOnly){
 
 function _dispatcher(payload){
     switch(payload.actionType){
-        case ItemsConstants.REVEAL_ALL_ITEMS:
-            ItemsStore.emitChange();
+        case ItemsConstants.END_GENERATE_MAP_SUCCESS:
+            data.isGameOver = false;
+            PlayerStore.emitChange();
             break;
+        case ItemsConstants.REVEAL_ALL_ITEMS:
+            data.isGameOver = true;
+            PlayerStore.emitChange();
+            break;
+        case PlayersConstants.GAME_OVER:
+            data.isGameOver = true;
+            data.hasWon = payload.arguments.won;
+            PlayerStore.emitChange();
     }
 
     return true;
 }
 
-module.exports = ItemsStore.assign({
+module.exports = PlayerStore.assign({
     getDebugData:function(){
         return data;
     },
     hasFetched:function(){
         return data.hasFetched;
     },
-    getResource:function(type){
-        return data[type];
+    hasWon: function(){
+        return data.hasWon;
+    },
+    isGameOver: function(){
+        return data.isGameOver;
     },
     dispatcherIndex:Dispatcher.register(_dispatcher)
 });

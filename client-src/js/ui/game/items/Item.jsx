@@ -1,18 +1,16 @@
 var React = require('react');
 var ItemsActions = require('../../../app/game/ItemsActions');
+var PlayerActions = require('../../../app/game/PlayerActions');
 var ItemsStore = require('../../../app/game/ItemsStore');
 
 var Item = React.createClass({
     propTypes: {
         item: React.PropTypes.object.isRequired
     },
-    revealItem: function(event){
-        if(this.props.item.isBomb){
-            //TODO: Lose game
-        } else if(this.props.item.isFlag){
-            //TODO: Handle flag
-        } else {
-            ItemsActions.revealItem(this.props.item);
+    revealItem: function(){
+        ItemsActions.revealItem(this.props.item);
+        if(ItemsStore.getRemaining().length <= 1){
+            PlayerActions.gameOver(true);
         }
     },
     flagItem: function(event){

@@ -10,7 +10,9 @@ var EndOfRound = React.createClass({
     getInitialState: function () {
         return {
             hasFetched: ItemStore.hasFetched(),
-            isFetching: ItemStore.isFetching()
+            isFetching: ItemStore.isFetching(),
+            hasWon: PlayerStore.hasWon(),
+            isGameOver: PlayerStore.isGameOver()
         };
     },
     componentDidMount: function () {
@@ -25,18 +27,33 @@ var EndOfRound = React.createClass({
         this.setState({
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
-            options: ItemStore.getOptions(),
-            placedFlags: ItemStore.getFlags().length
+            hasWon: PlayerStore.hasWon(),
+            isGameOver: PlayerStore.isGameOver()
+        });
+    },
+    _onHide: function(){
+        this.setState({
+            isGameOver: false
         });
     },
     render: function() {
+        var title = 'Oh no! You\'ve lost!';
+        var body = 'Don\'t worry, you can try again if you\'d you like';
+        var footer = '';
+
+        if(this.state.hasWon){
+            title = 'You\'ve won!';
+            body = 'You can play again if you\'d you like, maybe try a harder setting?';
+            footer = '';
+        }
+
         return (
             <Modal
                 title={title}
                 body={body}
-                footer={}
-                onHide={}
-                isVisible={this.state.isVisible}
+                footer={footer}
+                onHide={this._onHide}
+                isVisible={this.state.isGameOver}
                 />
         );
     }

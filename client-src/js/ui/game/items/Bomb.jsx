@@ -9,7 +9,7 @@ var Bomb = React.createClass({
     },
     gameOver: function(){
         ItemsActions.revealAllItems();
-        PlayerActions.gameOver();
+        PlayerActions.gameOver(false);
     },
     flagItem: function(event){
         event.preventDefault();

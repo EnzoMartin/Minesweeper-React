@@ -4,14 +4,16 @@ var ItemsModelFactory = require('./ItemsModelFactories');
 var Dispatcher = require('../../modules/Dispatcher');
 
 module.exports = {
-    gameOver: function(){
+    /**
+     * Triggers game over screen
+     * @param won Boolean
+     */
+    gameOver: function(won){
         Dispatcher.dispatch({
-            actionType: PlayerConstants.GAME_OVER
-        });
-    },
-    gameWon: function(){
-        Dispatcher.dispatch({
-            actionType: PlayerConstants.GAME_WON
+            actionType: PlayerConstants.GAME_OVER,
+            arguments:{
+                won: won
+            }
         });
     },
     mouseEnter: function(x,y){

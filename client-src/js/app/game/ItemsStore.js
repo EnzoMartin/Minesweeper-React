@@ -186,6 +186,11 @@ module.exports = ItemsStore.assign({
     getOptions:function(){
         return data.options;
     },
+    getRemaining:function(){
+        return data.items.filter(function(item){
+            return !item.isRevealed && !item.isBomb;
+        });
+    },
     getFlags:function(){
         return data.flags;
     },

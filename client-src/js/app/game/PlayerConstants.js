@@ -10,6 +10,5 @@ module.exports = {
     PLAYER_KEY_UP: 'PLAYER_KEY_UP',
     PLAYER_KEY_DOWN: 'PLAYER_KEY_DOWN',
 
-    GAME_OVER: 'GAME_OVER',
-    GAME_WON: 'GAME_WON'
+    GAME_OVER: 'GAME_OVER'
 };
