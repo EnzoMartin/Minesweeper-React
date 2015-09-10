@@ -6,17 +6,22 @@ var Item = React.createClass({
         item: React.PropTypes.object.isRequired
     },
     revealItem: function(){
-        ItemActions.revealItem(this.props.item);
+        if(this.props.item.isBomb){
+            //TODO: Lose game
+        } else if(this.props.item.isFlag){
+            //TODO: Handle flag
+        } else {
+            var item = this.props.item.shallowClone();
+            item.isRevealed = true;
+            ItemActions.revealItem(item);
+        }
     },
     render: function() {
         var item = this.props.item;
-        var style = {
-            left: item.left,
-            top: item.top
-        };
+        var revealedClass = item.isRevealed? 'bombs-' + item.label + ' revealed' : '';
 
         return (
-            <td className={'item revealed bombs-' + item.label} style={style} onClick={this.revealItem}>{item.label? item.label : null}</td>
+            <td className={'item ' + revealedClass} onClick={this.revealItem}>{item.isRevealed && item.label? item.label : null}</td>
         );
     }
 });

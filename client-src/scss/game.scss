@@ -1,62 +1,62 @@
 #game {
-    position: relative;
+    vertical-align: top;
     user-select: none;
+    width: 100%;
+    height: 100%;
 
-    #stage {
-        #items {
+    #items {
+        margin: 0 auto;
+    }
+
+    .item {
+        border: 1px solid #000;
+        background: #CCC;
+        vertical-align: middle;
+        text-align: center;
+
+        &.hidden {
+            &:hover {
+                background: #999;
+                cursor: pointer;
+            }
+        }
+
+        i {
             margin: 0;
         }
 
-        .item {
-            border: 1px solid #000;
-            background: #CCC;
-            vertical-align: middle;
-            text-align: center;
+        &.flag {
 
-            &.hidden {
-                &:hover {
-                    background: #999;
-                    cursor: pointer;
-                }
+        }
+
+        &.revealed {
+            background: #FFF;
+
+            &.bombs-1 {
+                color: blue;
             }
 
-            i {
-                margin: 0;
+            &.bombs-2,
+            &.bombs-3 {
+                color: green;
             }
 
-            &.flag {
-
+            &.bombs-4,
+            &.bombs-5 {
+                color: yellow;
             }
 
-            &.revealed {
-                background: #FFF;
+            &.bombs-6,
+            &.bombs-7 {
+                color: orange;
+            }
 
-                &.bombs-1 {
-                    color: blue;
-                }
+            &.bombs-8 {
+                color: red;
+            }
 
-                &.bombs-2,
-                &.bombs-3 {
-                    color: green;
-                }
-
-                &.bombs-4,
-                &.bombs-5 {
-                    color: yellow;
-                }
-
-                &.bombs-6,
-                &.bombs-7 {
-                    color: orange;
-                }
-
-                &.bombs-8 {
-                    color: red;
-                }
-
-                &.bomb {
-                    background: red;
-                }
+            &.bomb {
+                background: red;
             }
         }
     }

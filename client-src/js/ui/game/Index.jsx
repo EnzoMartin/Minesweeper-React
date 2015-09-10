@@ -80,14 +80,16 @@ var GameIndex = React.createClass({
     },
     render: function() {
         return (
-            <div ref="game" id="game"
+            <table ref="game" id="game"
                  onMouseEnter={this._onMouseEnter}
                  onMouseLeave={this._onMouseLeave}
                  onMouseMove={this._onMouseMove}>
-                <div ref="stage" id="stage">
-                    <Items/>
-                </div>
-            </div>
+                <tr>
+                    <td id="stage">
+                        <Items/>
+                    </td>
+                </tr>
+            </table>
         );
     }
 });

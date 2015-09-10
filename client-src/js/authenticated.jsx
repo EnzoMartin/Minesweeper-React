@@ -12,7 +12,7 @@ var ItemActions = require('./app/game/ItemsActions');
 var ItemsStore = require('./app/game/ItemsStore');
 
 //TODO: Remove this when done debugging
-ItemActions.generateMap(40,40,3);
+ItemActions.generateMap(10,10,1);
 
 var routes = (
     <Route handler={require('./ui/Layout')}>

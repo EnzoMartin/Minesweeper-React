@@ -13,9 +13,7 @@ var Layout = React.createClass({
         return (
             <div id="wrapper">
                 <Header/>
-                <div id="content">
-                    <RouteHandler />
-                </div>
+                <RouteHandler />
             </div>
         );
     }

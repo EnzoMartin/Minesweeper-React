@@ -30,7 +30,7 @@ module.exports = {
         Dispatcher.dispatch({
             actionType: ItemsConstants.REVEAL_ITEM,
             arguments: {
-                item: item.id
+                items: [new ItemsModelFactory.ItemModel(item)]
             }
         });
     },

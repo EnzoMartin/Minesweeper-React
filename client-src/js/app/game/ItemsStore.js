@@ -106,6 +106,10 @@ function _dispatcher(payload){
 
             ItemsStore.emitChange();
             break;
+        case ItemsConstants.REVEAL_ITEM:
+            updateSomeItems(payload);
+            persistAndEmitChange();
+            break;
     }
 
     return true;

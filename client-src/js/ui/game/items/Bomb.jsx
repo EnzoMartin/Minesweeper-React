@@ -10,13 +10,10 @@ var Item = React.createClass({
     },
     render: function() {
         var item = this.props.item;
-        var style = {
-            left: item.left,
-            top: item.top
-        };
+        var revealedClass = item.isRevealed? ' revealed' : '';
 
         return (
-            <td className="item bomb" style={style} onClick={this.gameOver}><i className="fa fa-bomb"/></td>
+            <td className={'item bomb' + revealedClass} onClick={this.gameOver}><i className="fa fa-bomb"/></td>
         );
     }
 });

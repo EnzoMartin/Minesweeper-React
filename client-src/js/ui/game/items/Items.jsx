@@ -44,7 +44,7 @@ var Items = React.createClass({
         });
 
         return (
-            <table id="items" className="table table-condensed table-no-border">
+            <table id="items">
                 <tbody>
                     {rows}
                 </tbody>
