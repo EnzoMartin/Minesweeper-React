@@ -7,20 +7,28 @@ module.exports = {
     boxHeight: 30,
     Difficulties: {
         1: {
-            name: 'Easy',
+            name: 'Very Easy',
             percent: 10
         },
         2: {
-            name: 'Medium',
-            percent: 25
+            name: 'Easy',
+            percent: 15
         },
         3: {
-            name: 'Hard',
-            percent: 40
+            name: 'Medium',
+            percent: 20
         },
         4: {
+            name: 'Hard',
+            percent: 30
+        },
+        5: {
             name: 'Nightmare',
             percent: 60
+        },
+        6: {
+            name: 'Impossibruuu!!',
+            percent: 90
         }
     }
 };
