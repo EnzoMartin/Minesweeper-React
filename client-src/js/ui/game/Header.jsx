@@ -51,6 +51,9 @@ var HUDIndex = React.createClass({
         return (
             <header className="navbar navbar-inverse navbar-static-top">
                 <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="https://github.com/EnzoMartin/Minesweeper-React" target="_blank"><i className="fa fa-github"/>View Source</a>
+                    </div>
                     <p className="navbar-text navbar-left">
                         <i className="fa fa-bomb"/><strong>Total Bombs:</strong> {this.state.options.totalBombs}
                     </p>
