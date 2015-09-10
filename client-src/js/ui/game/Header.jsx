@@ -1,8 +1,8 @@
 var React = require('react');
-var PlayerActions = require('../../app/game/PlayerActions');
 var PlayerStore = require('../../app/game/PlayerStore');
 var ItemStore = require('../../app/game/ItemsStore');
 var Definitions = require('../../../../config/Definitions');
+var ItemActions = require('../../app/game/ItemsActions');
 
 var _ = require('lodash');
 var Serialize = require('form-serialize');
@@ -33,7 +33,13 @@ var HUDIndex = React.createClass({
         });
     },
     _onSubmit: function(event){
-
+        event.preventDefault();
+        var form = Serialize(event.target,{hash:true});
+        ItemActions.generateMap(
+            parseInt(form.width,10),
+            parseInt(form.height,10),
+            parseInt(form.difficulty,10)
+        );
     },
     render: function() {
         var difficulties = _.map(Definitions.Difficulties,function(difficulty,id){
@@ -46,17 +52,18 @@ var HUDIndex = React.createClass({
                     <p className="navbar-text navbar-left"><i className="fa fa-bomb"/><strong>Remaining Bombs:</strong> {this.state.options.totalBombs}</p>
                     <form className="navbar-form navbar-right" role="search" onSubmit={this._onSubmit}>
                         <div className="form-group">
+                            <p className="form-control-static pull-left">Difficulty:</p>
                             <select className="form-control" name="difficulty" defaultValue={this.state.options.difficulty}>
                                 <option>Select difficulty</option>
                                 {difficulties}
                             </select>
                         </div>
-                        <div className="input-group">
-                            <input type="number" min="1" className="form-control" name="width" defaultValue={this.state.options.width} placeholder="Width" style={{width:80}}/>
+                        <div className="form-group">
                             <input type="number" min="1" className="form-control" name="height" defaultValue={this.state.options.height} placeholder="Height" style={{width:80}}/>
-                            <span className="input-group-btn">
-                                <button className="btn btn-primary" type="button">Play!</button>
-                            </span>
+                            <p className="form-control-static">Row(s) by</p>
+                            <input type="number" min="1" className="form-control" name="width" defaultValue={this.state.options.width} placeholder="Width" style={{width:80}}/>
+                            <p className="form-control-static">Column(s)</p>
+                            <button className="btn btn-primary" type="submit">Play!</button>
                         </div>
                     </form>
                 </div>

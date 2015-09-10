@@ -11,6 +11,7 @@ require('./Includes');
 var ItemActions = require('./app/game/ItemsActions');
 var ItemsStore = require('./app/game/ItemsStore');
 
+//TODO: Remove this when done debugging
 ItemActions.generateMap(40,40,3);
 
 var routes = (

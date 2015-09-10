@@ -9,8 +9,9 @@ var _ = require('lodash');
 var ItemsStore = RegisteredStore.create('ItemsStore');
 
 var data = {
-    hasFetched:false,
-    money: 500000
+    generatedMap:false,
+    timeElapsed:0,
+    lost:false
 };
 
 /**
@@ -45,16 +46,7 @@ function updateAllItems(payload,mergeOnly){
 
 function _dispatcher(payload){
     switch(payload.actionType){
-        case ItemsConstants.BEGIN_GENERATE_MAP:
-            ItemsStore.emitChange();
-            break;
-        case ItemsConstants.END_GENERATE_MAP_SUCCESS:
-            updateAllItems(payload);
-            data.hasFetched = true;
-            persistAndEmitChange();
-            break;
-        case ItemsConstants.END_GENERATE_MAP_FAILURE:
-            data.hasFetched = true;
+        case ItemsConstants.REVEAL_ALL_ITEMS:
             ItemsStore.emitChange();
             break;
     }

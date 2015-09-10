@@ -21,8 +21,26 @@ a {
     }
 }
 
-header.navbar {
-    margin-bottom: 0;
+header {
+    &.navbar {
+        margin-bottom: 0;
+
+        p {
+            padding-right: 5px;
+            padding-left: 5px;
+            color: #FFF;
+        }
+
+        .form-group {
+            select {
+                margin-right: 15px;
+            }
+
+            input {
+                margin: 0 5px;
+            }
+        }
+    }
 }
 
 .sortable tr {
