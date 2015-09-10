@@ -1,5 +1,6 @@
 var Dispatcher = require('../../modules/Dispatcher');
 var ItemsConstants = require('./ItemsConstants');
+var ItemsModelFactories = require('./ItemsModelFactories');
 var PlayersConstants = require('./PlayerConstants');
 var RegisteredStore = require('../../modules/RegisteredStore');
 var Immutable = require('../../modules/immutable');
@@ -74,6 +75,31 @@ function updateSomeItems(payload){
     updateAllItems(payload,true);
 }
 
+function revealNeighbors(item){
+    item.neighbors.forEach(function(id){
+        var item = data.items.index(id);
+        if(!item.isBomb && !item.isFlag && !item.isRevealed){
+            revealItem(item);
+        }
+    });
+}
+
+function revealItem(item){
+    var model = item.shallowClone();
+    model.isRevealed = true;
+
+    var transaction = data.items.transaction();
+    transaction.addOrUpdate(item.id,new ItemsModelFactories.ItemModel(model));
+    data.items = transaction.commit();
+
+    buildMap();
+    ItemsStore.emitChange();
+
+    if(!item.label){
+        revealNeighbors(item);
+    }
+}
+
 /**
  * Delete by the given ID
  * @param payload
@@ -107,8 +133,7 @@ function _dispatcher(payload){
             ItemsStore.emitChange();
             break;
         case ItemsConstants.REVEAL_ITEM:
-            updateSomeItems(payload);
-            persistAndEmitChange();
+            revealItem(payload.arguments.items[0]);
             break;
     }
 

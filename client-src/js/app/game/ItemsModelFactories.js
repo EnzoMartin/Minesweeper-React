@@ -9,14 +9,17 @@ var ItemModel = Immutable.Model.extend(function ItemModel(data){
 
     this.isFlag = data.isFlag || false;
     this.isBomb = data.isBomb || false;
-    this.label = data.label || '';
+    this.label = data.label || null;
     this.isRevealed = data.isRevealed || false;
 
     this.col = data.col;
     this.row = data.row;
 
+    this.neighbors = data.neighbors || [];
+
     if(data.id){
         Immutable.Freezer.freeze(this);
+        Immutable.Freezer.freeze(this.neighbors);
     }
 });
 
@@ -73,15 +76,24 @@ module.exports = {
             var endCol = Math.floor(col + 1);
             var endRow = Math.floor(row + 1);
 
+            var neighbors = [];
+
             item.label = items.filter(function(item){
-                return item.isBomb &&
-                    item.col >= startingCol &&
+                var isNeighbor = item.col >= startingCol &&
                     item.col <= endCol &&
                     item.row >= startingRow &&
                     item.row <= endRow;
+
+                if(isNeighbor){
+                    neighbors.push(item.id);
+                }
+
+                return item.isBomb && isNeighbor;
             }).length;
 
+            item.neighbors = neighbors;
             Immutable.Freezer.freeze(item);
+            Immutable.Freezer.freeze(item.neighbors);
         });
 
         return {

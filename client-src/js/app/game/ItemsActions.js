@@ -1,5 +1,5 @@
 var ItemsConstants = require('./ItemsConstants');
-var ItemsModelFactory = require('./ItemsModelFactories');
+var ItemsModelFactories = require('./ItemsModelFactories');
 var Definitions = require('../../../../config/Definitions');
 var Dispatcher = require('../../modules/Dispatcher');
 var _ = require('lodash');
@@ -23,14 +23,14 @@ module.exports = {
 
         Dispatcher.dispatch({
             actionType: ItemsConstants.END_GENERATE_MAP_SUCCESS,
-            arguments: ItemsModelFactory.generateGame(width,height,difficulty)
+            arguments: ItemsModelFactories.generateGame(width,height,difficulty)
         });
     },
     revealItem: function(item){
         Dispatcher.dispatch({
             actionType: ItemsConstants.REVEAL_ITEM,
             arguments: {
-                items: [new ItemsModelFactory.ItemModel(item)]
+                items: [item]
             }
         });
     },

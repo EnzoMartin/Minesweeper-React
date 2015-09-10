@@ -11,9 +11,7 @@ var Item = React.createClass({
         } else if(this.props.item.isFlag){
             //TODO: Handle flag
         } else {
-            var item = this.props.item.shallowClone();
-            item.isRevealed = true;
-            ItemActions.revealItem(item);
+            ItemActions.revealItem(this.props.item);
         }
     },
     render: function() {
