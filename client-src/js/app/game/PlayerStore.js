@@ -18,7 +18,7 @@ var data = {
  * Save the player's data to browser's local storage and trigger store change
  */
 function persistAndEmitChange(){
-    localStorage.setItem('player',JSON.stringify(data.values));
+    localStorage.setItem('player',JSON.stringify(data));
     PlayerStore.emitChange();
 }
 
