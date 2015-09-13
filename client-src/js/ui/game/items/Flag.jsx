@@ -10,7 +10,7 @@ var Flag = React.createClass({
         event.stopPropagation();
         event.returnValue = false;
         if(!this.props.item.isRevealed){
-            ItemsActions.toggleFlag(this.props.item);
+            ItemsActions.toggleFlag(this.props.item,false);
         }
     },
     render: function(){

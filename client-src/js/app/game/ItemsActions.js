@@ -26,9 +26,14 @@ module.exports = {
             arguments: ItemsModelFactories.generateGame(width,height,difficulty)
         });
     },
-    toggleFlag: function(item){
+    /**
+     * Set an item as flagged
+     * @param item {ItemModel}
+     * @param flagged Boolean
+     */
+    toggleFlag: function(item,flagged){
         var model = item.shallowClone();
-        model.isFlag = !model.isFlag;
+        model.isFlag = flagged;
 
         Dispatcher.dispatch({
             actionType: ItemsConstants.TOGGLE_ITEM_FLAG,

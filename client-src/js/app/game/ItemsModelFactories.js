@@ -4,6 +4,17 @@ var Items = Definitions.Items;
 var Tools = Definitions.Tools;
 var uuid = require('node-uuid');
 
+/**
+ * @define ItemModel
+ * @property id String
+ * @property isFlag Boolean
+ * @property isBomb Boolean
+ * @property label String
+ * @property isRevealed Boolean
+ * @property col Number
+ * @property row Number
+ * @property neighbors Array
+ */
 var ItemModel = Immutable.Model.extend(function ItemModel(data){
     this.id = data.id || uuid.v4();
 
@@ -23,6 +34,14 @@ var ItemModel = Immutable.Model.extend(function ItemModel(data){
     }
 });
 
+/**
+ * @define OptionsModel
+ * @property width Number
+ * @property height Number
+ * @property difficulty Number
+ * @property totalBombs Number
+ * @property totalSquares Number
+ */
 var OptionsModel = Immutable.Model.extend(function OptionsModel(data){
     this.width = data.width;
     this.height = data.height;
@@ -34,6 +53,13 @@ var OptionsModel = Immutable.Model.extend(function OptionsModel(data){
 });
 
 module.exports = {
+    /**
+     * Generate the game
+     * @param width Number
+     * @param height Number
+     * @param difficulty Number
+     * @returns {{items: Array, options: {OptionsModel}}}
+     */
     generateGame: function(width, height, difficulty) {
         var items = [];
         var h = 0;
