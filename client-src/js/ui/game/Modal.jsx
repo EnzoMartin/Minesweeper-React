@@ -40,15 +40,21 @@ var EndOfRound = React.createClass({
             isVisible: false
         });
     },
+    _onPlayAgain: function(){
+        var options = ItemStore.getOptions();
+        ItemActions.generateMap(options.width,options.height,options.difficulty);
+    },
     render: function() {
         var title = 'Oh no! You\'ve lost!';
         var body = 'Don\'t worry, you can try again if you\'d like';
-        var footer = '';
+        var footer = (<div>
+            <div className="btn btn-default pull-left" onClick={this._onHide}>Change options</div>
+            <div className="btn btn-primary" onClick={this._onPlayAgain}>Play again</div>
+        </div>);
 
         if(this.state.hasWon){
             title = 'You\'ve won!';
             body = 'You can play again if you\'d like, maybe try a harder setting?';
-            footer = '';
         }
 
         return (
