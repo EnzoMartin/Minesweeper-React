@@ -54,6 +54,36 @@ var OptionsModel = Immutable.Model.extend(function OptionsModel(data){
 
 module.exports = {
     /**
+     * Re-create models from a save game
+     * @param options Object
+     * @param items Array
+     */
+    loadGame: function(options,items){
+        var itemModels = [];
+        var maxBombs = 0;
+
+        items.forEach(function(item){
+            if(item.isBomb){
+                maxBombs++;
+            }
+
+            itemModels.push(new ItemModel(item));
+        });
+
+        var optionsModel = new OptionsModel({
+            width:options.width,
+            height:options.height,
+            difficulty:options.difficulty,
+            totalBombs:maxBombs,
+            totalSquares:items.length
+        });
+
+        return {
+            options: optionsModel,
+            items: itemModels
+        }
+    },
+    /**
      * Generate the game
      * @param width Number
      * @param height Number

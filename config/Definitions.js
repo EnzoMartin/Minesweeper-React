@@ -3,6 +3,11 @@ module.exports = {
     Permissions: {
         viewPage: 'viewPage'
     },
+    Defaults: {
+        width: 10,
+        height: 10,
+        difficulty: 1
+    },
     boxWidth: 40,
     boxHeight: 35,
     Difficulties: {

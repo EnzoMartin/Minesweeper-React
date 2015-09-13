@@ -9,6 +9,7 @@ var PlayerStore = RegisteredStore.create('PlayerStore');
 var data = {
     generatedMap:false,
     timeElapsed:0,
+    isPlaying: false,
     isGameOver:false,
     hasWon:false,
     options:new Immutable.Model()
@@ -24,17 +25,28 @@ function persistAndEmitChange(){
 
 function _dispatcher(payload){
     switch(payload.actionType){
+        case ItemsConstants.BEGIN_GENERATE_MAP:
+            data.isPlaying = false;
+            persistAndEmitChange();
+            break;
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isGameOver = false;
             data.options = payload.arguments.options;
             persistAndEmitChange();
             break;
+        case ItemsConstants.REVEAL_ITEM:
+        case ItemsConstants.TOGGLE_ITEM_FLAG:
+            data.isPlaying = true;
+            persistAndEmitChange();
+            break;
         case ItemsConstants.REVEAL_ALL_ITEMS:
             data.isGameOver = true;
+            data.isPlaying = false;
             persistAndEmitChange();
             break;
         case PlayersConstants.GAME_OVER:
             data.isGameOver = true;
+            data.isPlaying = false;
             data.hasWon = payload.arguments.won;
             persistAndEmitChange();
     }

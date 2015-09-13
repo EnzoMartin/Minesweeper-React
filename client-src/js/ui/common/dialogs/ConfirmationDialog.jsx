@@ -1,6 +1,5 @@
 var React = require('react');
 var Modal = require('react-bootstrap').Modal;
-var Mutex = require('../Mutex');
 
 var ConfirmationDialog = React.createClass({
     getDefaultProps: function() {
@@ -23,20 +22,18 @@ var ConfirmationDialog = React.createClass({
     },
     render: function() {
         return (
-            <Mutex context="dialog" obtainLock={this.props.isVisible}>
-                <div className="static-modal">
-                    <Modal show={true}  enforceFocus={false} autoFocus={false} backdrop={true} animation={true} container={window.document.body} onHide={this._onCancel}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>{this.props.title}</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>{this.props.body}</Modal.Body>
-                        <Modal.Footer>
-                            <button className="btn btn-default" onClick={this._onCancel}>Cancel</button>
-                            <button className="btn btn-primary" onClick={this._onConfirm}>Confirm</button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-            </Mutex>
+            <div className="static-modal">
+                <Modal show={true} enforceFocus={false} autoFocus={false} backdrop={true} animation={true} container={window.document.body} onHide={this._onCancel}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.props.title}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>{this.props.body}</Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-default" onClick={this._onCancel}>Cancel</button>
+                        <button className="btn btn-primary" onClick={this._onConfirm}>Confirm</button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         );
     }
 });

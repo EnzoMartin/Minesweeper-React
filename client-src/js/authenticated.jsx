@@ -12,8 +12,7 @@ var PlayerActions = require('./app/game/PlayerActions');
 var ItemsStore = require('./app/game/ItemsStore');
 var PlayerStore = require('./app/game/PlayerStore');
 
-//TODO: Remove this when done debugging
-PlayerActions.generateMap(10,10,1);
+PlayerActions.loadPreviousGame();
 
 var routes = (
     <Route handler={require('./ui/Layout')}>

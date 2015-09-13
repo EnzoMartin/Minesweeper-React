@@ -10,8 +10,7 @@ var Items = React.createClass({
         return {
             hasFetched: ItemsStore.hasFetched(),
             isFetching: ItemsStore.isFetching(),
-            items: ItemsStore.getMap(),
-            ghost: ItemsStore.getGhost()
+            items: ItemsStore.getMap()
         };
     },
     componentDidMount: function () {

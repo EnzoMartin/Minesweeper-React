@@ -17,15 +17,52 @@ module.exports = {
             actionType: ItemsConstants.BEGIN_GENERATE_MAP
         });
 
-        // Get the player's placed items from previous session
-        /*var items = localStorage.getItem('items');
-        items = items? JSON.parse(items) : [];*/
-
-
         Dispatcher.dispatch({
             actionType: ItemsConstants.END_GENERATE_MAP_SUCCESS,
             arguments: ItemsModelFactories.generateGame(width,height,difficulty)
         });
+    },
+    /**
+     * Load the player's previous game or generate a new game
+     */
+    loadPreviousGame: function(){
+        var player = JSON.parse(localStorage.getItem('player') || '{}');
+        var previousOptions = player.options;
+        var options = {
+            width: Definitions.Defaults.width,
+            height: Definitions.Defaults.height,
+            difficulty: Definitions.Defaults.difficulty
+        };
+
+        if(previousOptions){
+            options.height = previousOptions.height;
+            options.width = previousOptions.width;
+            options.difficulty = previousOptions.difficulty;
+        }
+
+        var previousGame = {
+            items: [],
+            flags: [],
+            map: [[]]
+        };
+
+        if(player.isPlaying){
+            Object.keys(previousGame).forEach(function(key){
+                var data = JSON.parse(localStorage.getItem(key) || 'false');
+                if(data){
+                    previousGame[key] = data;
+                }
+            });
+        }
+
+        if(previousGame.items.length){
+            Dispatcher.dispatch({
+                actionType: ItemsConstants.END_GENERATE_MAP_SUCCESS,
+                arguments: ItemsModelFactories.loadGame(options,previousGame.items)
+            });
+        } else {
+            this.generateMap(options.width,options.height,options.difficulty);
+        }
     },
     /**
      * Triggers game over screen

@@ -27,23 +27,19 @@ function persistAndEmitChange(){
 }
 
 /**
- * Update the data in the store, optionally don't prune items
+ * Update the data in the store
  * @param payload Object
- * @param [mergeOnly] Boolean Pass true to prevent the deletion of items not present in the payload
  */
-function updateAllItems(payload,mergeOnly){
+function updateAllItems(payload){
+    var flags = [];
     var transaction = data.items.transaction();
-    var ids = [];
     payload.arguments.items.forEach(function(item){
-        ids.push(item.id);
+        if(item.isFlag){
+            flags.push(item);
+        }
+
         transaction.addOrUpdate(item.id,item);
     });
-
-    if(!mergeOnly){
-        transaction.removeWhere(function(id){
-            return ids.indexOf(id) === -1;
-        });
-    }
 
     data.items = transaction.commit();
     buildMap();
@@ -56,25 +52,6 @@ function buildMap(){
 
         return items;
     },[]);
-}
-
-/**
- * Removes items not in payload that are relevant to the payload's items, then calls updateAllItems with a merge only
- * @param payload Object
- */
-function updateSomeItems(payload){
-    var transaction = data.items.transaction();
-    var ids = payload.arguments.items.reduce(function(ids,item){
-        ids.push(item.id);
-        return ids;
-    },[]);
-
-    transaction.removeWhere(function(id,item){
-        return ids.indexOf(item.id) !== -1;
-    });
-
-    data.items = transaction.commit();
-    updateAllItems(payload,true);
 }
 
 function revealNeighbors(item){
@@ -115,28 +92,16 @@ function revealAllItems(){
     data.items = transaction.commit();
 
     buildMap();
-    ItemsStore.emitChange();
-}
-
-/**
- * Delete by the given ID
- * @param payload
- */
-function deleteById(payload){
-    var transaction = data.items.transaction();
-    transaction.remove(payload.arguments.id);
-    data.items = transaction.commit();
 }
 
 function _dispatcher(payload){
     switch(payload.actionType){
         case ItemsConstants.BEGIN_GENERATE_MAP:
             data.isFetching = true;
-            persistAndEmitChange();
+            ItemsStore.emitChange();
             break;
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isFetching = false;
-            data.flags = [];
             updateAllItems(payload);
             data.hasFetched = true;
             persistAndEmitChange();
@@ -152,16 +117,12 @@ function _dispatcher(payload){
             persistAndEmitChange();
             break;
         case ItemsConstants.REVEAL_ITEM:
-            revealItem(payload.arguments.items[0]);
+            var item = payload.arguments.items[0];
+            revealItem(item);
             persistAndEmitChange();
             break;
         case ItemsConstants.TOGGLE_ITEM_FLAG:
-            updateSomeItems(payload);
-
-            data.flags = data.items.filter(function(item){
-                return item.isFlag;
-            });
-
+            updateAllItems(payload);
             persistAndEmitChange();
             break;
     }
@@ -195,12 +156,6 @@ module.exports = ItemsStore.assign({
     },
     getById:function(id){
         return data.items.index(id);
-    },
-    getGhost:function(){
-        return data.ghost;
-    },
-    getTool:function(){
-        return data.tool;
     },
     dispatcherIndex:Dispatcher.register(_dispatcher)
 });
