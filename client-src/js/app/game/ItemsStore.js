@@ -147,6 +147,7 @@ function _dispatcher(payload){
             ItemsStore.emitChange();
             break;
         case ItemsConstants.REVEAL_ALL_ITEMS:
+        case PlayersConstants.GAME_OVER:
             revealAllItems();
             ItemsStore.emitChange();
             break;

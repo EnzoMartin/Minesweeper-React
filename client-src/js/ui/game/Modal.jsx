@@ -42,12 +42,12 @@ var EndOfRound = React.createClass({
     },
     render: function() {
         var title = 'Oh no! You\'ve lost!';
-        var body = 'Don\'t worry, you can try again if you\'d you like';
+        var body = 'Don\'t worry, you can try again if you\'d like';
         var footer = '';
 
         if(this.state.hasWon){
             title = 'You\'ve won!';
-            body = 'You can play again if you\'d you like, maybe try a harder setting?';
+            body = 'You can play again if you\'d like, maybe try a harder setting?';
             footer = '';
         }
 
