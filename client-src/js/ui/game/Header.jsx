@@ -15,6 +15,7 @@ var Header = React.createClass({
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
             options: PlayerStore.getOptions(),
+            isPlaying: PlayerStore.isPlaying(),
             placedFlags: ItemStore.getFlags().length
         };
     },
@@ -31,6 +32,7 @@ var Header = React.createClass({
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
             options: PlayerStore.getOptions(),
+            isPlaying: PlayerStore.isPlaying(),
             placedFlags: ItemStore.getFlags().length
         });
     },
@@ -55,7 +57,7 @@ var Header = React.createClass({
                         <a className="navbar-brand" href="https://github.com/EnzoMartin/Minesweeper-React" target="_blank"><i className="fa fa-github"/>View Source</a>
                     </div>
                     <p className="navbar-text navbar-left">
-                        <i className="fa fa-bomb"/><strong>Total Bombs:</strong> {this.state.options.totalBombs}
+                        <i className="fa fa-bomb"/><strong>Bombs:</strong> {this.state.options.totalBombs}
                     </p>
                     <p className="navbar-text navbar-left">
                         <i className="fa fa-flag"/><strong>Flags Placed:</strong> {this.state.placedFlags} of {this.state.options.totalBombs}
@@ -73,7 +75,7 @@ var Header = React.createClass({
                             <p className="form-control-static">Row(s) by</p>
                             <input type="number" min="1" className="form-control" name="width" required={true} defaultValue={this.state.options.width} placeholder="Width" style={{width:80}}/>
                             <p className="form-control-static">Column(s)</p>
-                            <button className="btn btn-primary" type="submit">Play!</button>
+                            <button className="btn btn-primary" type="submit">{this.state.isPlaying? 'Restart' : 'Play!'}</button>
                         </div>
                     </form>
                 </div>

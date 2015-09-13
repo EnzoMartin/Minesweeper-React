@@ -64,6 +64,9 @@ module.exports = PlayerStore.assign({
     hasWon: function(){
         return data.hasWon;
     },
+    isPlaying:function(){
+        return data.isPlaying;
+    },
     isGameOver: function(){
         return data.isGameOver;
     },
