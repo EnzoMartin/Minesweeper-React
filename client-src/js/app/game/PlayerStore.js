@@ -12,7 +12,8 @@ var data = {
     generatedMap:false,
     timeElapsed:0,
     isGameOver:false,
-    hasWon:false
+    hasWon:false,
+    options:new Immutable.Model()
 };
 
 /**
@@ -49,6 +50,7 @@ function _dispatcher(payload){
     switch(payload.actionType){
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isGameOver = false;
+            data.options = payload.arguments.options;
             PlayerStore.emitChange();
             break;
         case ItemsConstants.REVEAL_ALL_ITEMS:
@@ -70,6 +72,9 @@ module.exports = PlayerStore.assign({
     },
     hasFetched:function(){
         return data.hasFetched;
+    },
+    getOptions:function(){
+        return data.options;
     },
     hasWon: function(){
         return data.hasWon;

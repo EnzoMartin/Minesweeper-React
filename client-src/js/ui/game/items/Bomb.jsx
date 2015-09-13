@@ -2,6 +2,7 @@ var React = require('react');
 var ItemsActions = require('../../../app/game/ItemsActions');
 var PlayerActions = require('../../../app/game/PlayerActions');
 var ItemsStore = require('../../../app/game/ItemsStore');
+var PlayerStore = require('../../../app/game/PlayerStore');
 
 var Bomb = React.createClass({
     propTypes: {
@@ -15,7 +16,7 @@ var Bomb = React.createClass({
         event.preventDefault();
         event.stopPropagation();
         event.returnValue = false;
-        if(!this.props.item.isRevealed && ItemsStore.getFlags().length < ItemsStore.getOptions().totalBombs){
+        if(!this.props.item.isRevealed && ItemsStore.getFlags().length < PlayerStore.getOptions().totalBombs){
             ItemsActions.toggleFlag(this.props.item,true);
         }
     },

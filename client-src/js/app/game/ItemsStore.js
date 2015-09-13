@@ -13,8 +13,7 @@ var data = {
     isFetching:false,
     map:[[]],
     flags:[],
-    items:Immutable.Dictionary(),
-    options:new Immutable.Model()
+    items:Immutable.Dictionary()
 };
 
 /**
@@ -135,7 +134,6 @@ function _dispatcher(payload){
             break;
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isFetching = false;
-            data.options = payload.arguments.options;
             data.flags = [];
             updateAllItems(payload);
             data.hasFetched = true;
@@ -183,9 +181,6 @@ module.exports = ItemsStore.assign({
     },
     getMap:function(){
         return data.map;
-    },
-    getOptions:function(){
-        return data.options;
     },
     getRemaining:function(){
         return data.items.filter(function(item){

@@ -8,11 +8,12 @@ var DefaultRoute = Router.statics.DefaultRoute;
 require('./Includes');
 
 // Prep the stores and actions
-var ItemActions = require('./app/game/ItemsActions');
+var PlayerActions = require('./app/game/PlayerActions');
 var ItemsStore = require('./app/game/ItemsStore');
+var PlayerStore = require('./app/game/PlayerStore');
 
 //TODO: Remove this when done debugging
-ItemActions.generateMap(10,10,1);
+PlayerActions.generateMap(10,10,1);
 
 var routes = (
     <Route handler={require('./ui/Layout')}>

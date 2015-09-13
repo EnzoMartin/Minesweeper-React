@@ -2,7 +2,7 @@ var React = require('react');
 var PlayerStore = require('../../app/game/PlayerStore');
 var ItemStore = require('../../app/game/ItemsStore');
 var Definitions = require('../../../../config/Definitions');
-var ItemActions = require('../../app/game/ItemsActions');
+var PlayerActions = require('../../app/game/PlayerActions');
 
 var _ = require('lodash');
 var Serialize = require('form-serialize');
@@ -14,7 +14,7 @@ var Header = React.createClass({
         return {
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
-            options: ItemStore.getOptions(),
+            options: PlayerStore.getOptions(),
             placedFlags: ItemStore.getFlags().length
         };
     },
@@ -30,14 +30,14 @@ var Header = React.createClass({
         this.setState({
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
-            options: ItemStore.getOptions(),
+            options: PlayerStore.getOptions(),
             placedFlags: ItemStore.getFlags().length
         });
     },
     _onSubmit: function(event){
         event.preventDefault();
         var form = Serialize(event.target,{hash:true});
-        ItemActions.generateMap(
+        PlayerActions.generateMap(
             parseInt(form.width,10),
             parseInt(form.height,10),
             parseInt(form.difficulty,10)

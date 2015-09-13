@@ -2,7 +2,7 @@ var React = require('react');
 var PlayerStore = require('../../app/game/PlayerStore');
 var ItemStore = require('../../app/game/ItemsStore');
 var Definitions = require('../../../../config/Definitions');
-var ItemActions = require('../../app/game/ItemsActions');
+var PlayerActions = require('../../app/game/PlayerActions');
 
 var Modal = require('../common/Modal');
 
@@ -41,8 +41,8 @@ var EndOfRound = React.createClass({
         });
     },
     _onPlayAgain: function(){
-        var options = ItemStore.getOptions();
-        ItemActions.generateMap(options.width,options.height,options.difficulty);
+        var options = PlayerStore.getOptions();
+        PlayerActions.generateMap(options.width,options.height,options.difficulty);
     },
     render: function() {
         var title = 'Oh no! You\'ve lost!';
