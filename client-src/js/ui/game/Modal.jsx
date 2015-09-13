@@ -8,11 +8,13 @@ var Modal = require('../common/Modal');
 
 var EndOfRound = React.createClass({
     getInitialState: function () {
+        var isGameOver = PlayerStore.isGameOver();
         return {
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
             hasWon: PlayerStore.hasWon(),
-            isGameOver: PlayerStore.isGameOver()
+            isGameOver: isGameOver,
+            isVisible: isGameOver
         };
     },
     componentDidMount: function () {
@@ -24,16 +26,18 @@ var EndOfRound = React.createClass({
         PlayerStore.removeChangeListener(this._onStoreChange);
     },
     _onStoreChange: function() {
+        var isGameOver = PlayerStore.isGameOver();
         this.setState({
             hasFetched: ItemStore.hasFetched(),
             isFetching: ItemStore.isFetching(),
             hasWon: PlayerStore.hasWon(),
-            isGameOver: PlayerStore.isGameOver()
+            isGameOver: isGameOver,
+            isVisible: isGameOver == this.state.isGameOver? this.state.isVisible : isGameOver
         });
     },
     _onHide: function(){
         this.setState({
-            isGameOver: false
+            isVisible: false
         });
     },
     render: function() {
@@ -53,7 +57,7 @@ var EndOfRound = React.createClass({
                 body={body}
                 footer={footer}
                 onHide={this._onHide}
-                isVisible={this.state.isGameOver}
+                isVisible={this.state.isVisible}
                 />
         );
     }
