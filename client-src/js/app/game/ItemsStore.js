@@ -4,8 +4,6 @@ var ItemsModelFactories = require('./ItemsModelFactories');
 var PlayersConstants = require('./PlayerConstants');
 var RegisteredStore = require('../../modules/RegisteredStore');
 var Immutable = require('../../modules/immutable');
-var Definitions = require('../../../../config/Definitions');
-var _ = require('lodash');
 
 var ItemsStore = RegisteredStore.create('ItemsStore');
 
@@ -21,8 +19,6 @@ var data = {
  */
 function persistAndEmitChange(){
     localStorage.setItem('items',JSON.stringify(data.items.values));
-    localStorage.setItem('map',JSON.stringify(data.map));
-    localStorage.setItem('flags',JSON.stringify(data.flags));
     ItemsStore.emitChange();
 }
 
@@ -42,7 +38,6 @@ function updateAllItems(payload){
     });
 
     data.items = transaction.commit();
-    buildMap();
 }
 
 function buildMap(){
@@ -64,19 +59,25 @@ function revealNeighbors(item){
 }
 
 function revealItem(item){
-    var model = item.shallowClone();
-    model.isRevealed = true;
+    var updatedItem = item.transaction().set('isRevealed',true).commit();
 
     var transaction = data.items.transaction();
-    transaction.addOrUpdate(item.id,new ItemsModelFactories.ItemModel(model));
+    transaction.update(updatedItem.id,updatedItem);
     data.items = transaction.commit();
+    updateMapItem(updatedItem);
+    persistAndEmitChange();
 
-    buildMap();
-    ItemsStore.emitChange();
-
-    if(!item.label){
-        revealNeighbors(item);
+    if(!updatedItem.label){
+        revealNeighbors(updatedItem);
     }
+}
+
+/**
+ * Update the map with the new item
+ * @param item {ItemModel|Object}
+ */
+function updateMapItem(item){
+    data.map[item.row][item.col] = item;
 }
 
 function revealAllItems(){
@@ -104,6 +105,7 @@ function _dispatcher(payload){
             data.isFetching = false;
             data.items = data.items.transaction().clear().commit();
             updateAllItems(payload);
+            buildMap();
             data.hasFetched = true;
             persistAndEmitChange();
             break;
@@ -118,12 +120,11 @@ function _dispatcher(payload){
             persistAndEmitChange();
             break;
         case ItemsConstants.REVEAL_ITEM:
-            var item = payload.arguments.items[0];
-            revealItem(item);
-            persistAndEmitChange();
+            revealItem(payload.arguments.items[0]);
             break;
         case ItemsConstants.TOGGLE_ITEM_FLAG:
             updateAllItems(payload);
+            updateMapItem(payload.arguments.items[0]);
             persistAndEmitChange();
             break;
     }

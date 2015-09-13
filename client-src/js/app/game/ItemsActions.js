@@ -9,13 +9,12 @@ module.exports = {
      * @param flagged Boolean
      */
     toggleFlag: function(item,flagged){
-        var model = item.shallowClone();
-        model.isFlag = flagged;
+        var model = item.transaction().set('isFlag',flagged).commit();
 
         Dispatcher.dispatch({
             actionType: ItemsConstants.TOGGLE_ITEM_FLAG,
             arguments: {
-                items: [new ItemsModelFactories.ItemModel(model)]
+                items: [model]
             }
         });
     },
