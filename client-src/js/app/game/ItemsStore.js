@@ -21,6 +21,8 @@ var data = {
  */
 function persistAndEmitChange(){
     localStorage.setItem('items',JSON.stringify(data.items.values));
+    localStorage.setItem('map',JSON.stringify(data.map));
+    localStorage.setItem('flags',JSON.stringify(data.flags));
     ItemsStore.emitChange();
 }
 
@@ -130,7 +132,7 @@ function _dispatcher(payload){
     switch(payload.actionType){
         case ItemsConstants.BEGIN_GENERATE_MAP:
             data.isFetching = true;
-            ItemsStore.emitChange();
+            persistAndEmitChange();
             break;
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isFetching = false;
@@ -147,10 +149,11 @@ function _dispatcher(payload){
         case ItemsConstants.REVEAL_ALL_ITEMS:
         case PlayersConstants.GAME_OVER:
             revealAllItems();
-            ItemsStore.emitChange();
+            persistAndEmitChange();
             break;
         case ItemsConstants.REVEAL_ITEM:
             revealItem(payload.arguments.items[0]);
+            persistAndEmitChange();
             break;
         case ItemsConstants.TOGGLE_ITEM_FLAG:
             updateSomeItems(payload);
@@ -159,7 +162,7 @@ function _dispatcher(payload){
                 return item.isFlag;
             });
 
-            ItemsStore.emitChange();
+            persistAndEmitChange();
             break;
     }
 
