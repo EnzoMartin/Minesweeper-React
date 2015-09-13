@@ -53,7 +53,7 @@ var EndOfRound = React.createClass({
         </div>);
 
         if(this.state.hasWon){
-            title = 'You\'ve won!';
+            title = (<span>You've won! You took <strong>{PlayerStore.getTimeElapsed()} seconds</strong></span>);
             body = 'You can play again if you\'d like, maybe try a harder setting?';
         }
 

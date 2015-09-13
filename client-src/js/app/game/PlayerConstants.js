@@ -10,5 +10,8 @@ module.exports = {
     PLAYER_KEY_UP: 'PLAYER_KEY_UP',
     PLAYER_KEY_DOWN: 'PLAYER_KEY_DOWN',
 
+    SET_TIMER: 'SET_TIMER',
+    TIMER_TICK: 'TIMER_TICK',
+
     GAME_OVER: 'GAME_OVER'
 };

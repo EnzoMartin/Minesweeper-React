@@ -8,6 +8,7 @@ var _ = require('lodash');
 var Serialize = require('form-serialize');
 
 var Util = require('../../app/util/Format');
+var Timer = require('./Timer');
 
 var Header = React.createClass({
     getInitialState: function () {
@@ -62,6 +63,7 @@ var Header = React.createClass({
                     <p className="navbar-text navbar-left">
                         <i className="fa fa-flag"/><strong>Flags Placed:</strong> {this.state.placedFlags} of {this.state.options.totalBombs}
                     </p>
+                    <Timer/>
                     <form className="navbar-form navbar-right" role="search" onSubmit={this._onSubmit}>
                         <div className="form-group">
                             <p className="form-control-static pull-left">Difficulty:</p>

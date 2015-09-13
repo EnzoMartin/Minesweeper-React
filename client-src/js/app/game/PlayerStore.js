@@ -27,6 +27,7 @@ function _dispatcher(payload){
     switch(payload.actionType){
         case ItemsConstants.BEGIN_GENERATE_MAP:
             data.isPlaying = false;
+            data.timeElapsed = 0;
             persistAndEmitChange();
             break;
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
@@ -49,6 +50,15 @@ function _dispatcher(payload){
             data.isPlaying = false;
             data.hasWon = payload.arguments.won;
             persistAndEmitChange();
+            break;
+        case PlayersConstants.SET_TIMER:
+            data.timeElapsed = payload.arguments.elapsed;
+            persistAndEmitChange();
+            break;
+        case PlayersConstants.TIMER_TICK:
+            data.timeElapsed++;
+            persistAndEmitChange();
+            break;
     }
 
     return true;
@@ -63,6 +73,9 @@ module.exports = PlayerStore.assign({
     },
     hasWon: function(){
         return data.hasWon;
+    },
+    getTimeElapsed: function(){
+        return data.timeElapsed;
     },
     isPlaying:function(){
         return data.isPlaying;

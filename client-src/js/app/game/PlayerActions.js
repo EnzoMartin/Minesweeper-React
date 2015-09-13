@@ -5,6 +5,9 @@ var Definitions = require('../../../../config/Definitions');
 var Dispatcher = require('../../modules/Dispatcher');
 var _ = require('lodash');
 
+// 0 instead of false to keep IntelliJ from whining about type mismatch as clearInterval expects an int
+var playerTimer = 0;
+
 module.exports = {
     /**
      * Generate the map
@@ -21,6 +24,23 @@ module.exports = {
             actionType: ItemsConstants.END_GENERATE_MAP_SUCCESS,
             arguments: ItemsModelFactories.generateGame(width,height,difficulty)
         });
+    },
+    /**
+     * Toggle the playing timer on/off
+     * @TODO: Change this to animation frame stuff
+     * @param isPlaying
+     */
+    toggleTimer: function(isPlaying){
+        if(isPlaying && !playerTimer){
+            playerTimer = window.setInterval(function(){
+                Dispatcher.dispatch({
+                    actionType: PlayerConstants.TIMER_TICK
+                });
+            },1000);
+        } else if (!isPlaying && playerTimer) {
+            window.clearInterval(playerTimer);
+            playerTimer = 0;
+        }
     },
     /**
      * Load the player's previous game or generate a new game
@@ -52,6 +72,11 @@ module.exports = {
                 if(data){
                     previousGame[key] = data;
                 }
+            });
+
+            Dispatcher.dispatch({
+                actionType: PlayerConstants.SET_TIMER,
+                arguments: {elapsed: player.timeElapsed}
             });
         }
 
