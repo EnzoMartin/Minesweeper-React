@@ -3,6 +3,10 @@ body {
     background: #999;
 }
 
+html {
+    height: 100%;
+}
+
 i {
     margin-right: 5px;
 }
@@ -46,6 +50,7 @@ header {
 #wrapper {
     height: 100%;
     min-height: 100%;
+    width: 100%;
 }
 
 .sortable tr {
