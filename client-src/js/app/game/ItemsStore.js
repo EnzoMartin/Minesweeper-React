@@ -102,6 +102,7 @@ function _dispatcher(payload){
             break;
         case ItemsConstants.END_GENERATE_MAP_SUCCESS:
             data.isFetching = false;
+            data.items = data.items.transaction().clear().commit();
             updateAllItems(payload);
             data.hasFetched = true;
             persistAndEmitChange();
