@@ -47,6 +47,25 @@ function updateAllItems(payload){
     data.items = transaction.commit();
 }
 
+function updateFlaggedItem(item){
+    var found = false;
+    var i = 0;
+    var len = data.flags.length;
+    while(i < len){
+        if(data.flags[i].id == item.id){
+            found = true;
+            break;
+        }
+        i++;
+    }
+
+    if(item.isFlag && !found){
+        data.flags.push(item);
+    } else if(!item.isFlag && found){
+        data.flags.splice(i,1);
+    }
+}
+
 function buildMap(){
     data.map = data.items.reduce(function(items,item){
         items[item.row] = items[item.row] || [];
@@ -131,7 +150,7 @@ function _dispatcher(payload){
             revealItem(payload.arguments.items[0]);
             break;
         case ItemsConstants.TOGGLE_ITEM_FLAG:
-            updateAllItems(payload);
+            updateFlaggedItem(payload.arguments.items[0]);
             updateMapItem(payload.arguments.items[0]);
             persistAndEmitChange();
             break;
