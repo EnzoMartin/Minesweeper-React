@@ -9,6 +9,7 @@ var ItemsStore = RegisteredStore.create('ItemsStore');
 
 var data = {
     isFetching:false,
+    remaining:0,
     map:[[]],
     flags:[],
     items:Immutable.Dictionary()
@@ -28,15 +29,21 @@ function persistAndEmitChange(){
  */
 function updateAllItems(payload){
     var flags = [];
+    var remaining = 0;
     var transaction = data.items.transaction();
     payload.arguments.items.forEach(function(item){
         if(item.isFlag){
             flags.push(item);
         }
 
+        if(!item.isRevealed && !item.isBomb){
+            remaining++;
+        }
+
         transaction.addOrUpdate(item.id,item);
     });
 
+    data.remaining = remaining;
     data.items = transaction.commit();
 }
 
@@ -64,6 +71,7 @@ function revealItem(item){
     var transaction = data.items.transaction();
     transaction.update(updatedItem.id,updatedItem);
     data.items = transaction.commit();
+    data.remaining--;
     updateMapItem(updatedItem);
     persistAndEmitChange();
 
@@ -149,9 +157,7 @@ module.exports = ItemsStore.assign({
         return data.map;
     },
     getRemaining:function(){
-        return data.items.filter(function(item){
-            return !item.isRevealed && !item.isBomb;
-        });
+        return data.remaining;
     },
     getFlags:function(){
         return data.flags;

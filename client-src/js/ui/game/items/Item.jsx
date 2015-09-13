@@ -10,7 +10,7 @@ var Item = React.createClass({
     },
     revealItem: function(){
         ItemsActions.revealItem(this.props.item);
-        if(ItemsStore.getRemaining().length < 1){
+        if(ItemsStore.getRemaining() < 1){
             PlayerActions.gameOver(true);
         }
     },
