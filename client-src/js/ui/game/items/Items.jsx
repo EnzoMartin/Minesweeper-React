@@ -26,6 +26,7 @@ var Items = React.createClass({
     },
     render: function() {
         var rows = this.state.items.map(function(items,i){
+            console.log(items);
             return (<Row key={'row-'+i} items={items}/>);
         });
 

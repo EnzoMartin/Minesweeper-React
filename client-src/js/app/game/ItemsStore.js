@@ -7,6 +7,8 @@ var Immutable = require('../../modules/immutable');
 
 var ItemsStore = RegisteredStore.create('ItemsStore');
 
+var saveTimeout;
+
 var data = {
     isFetching:false,
     remaining:0,
@@ -19,7 +21,14 @@ var data = {
  * Save all items to browser's local storage and trigger store change
  */
 function persistAndEmitChange(){
-    localStorage.setItem('items',JSON.stringify(data.items.values));
+    if(saveTimeout){
+        window.clearTimeout(saveTimeout);
+    }
+
+    saveTimeout = window.setTimeout(function(){
+        localStorage.setItem('items',JSON.stringify(data.items.values));
+    },1000);
+
     ItemsStore.emitChange();
 }
 
@@ -72,6 +81,7 @@ function updateFlaggedItem(item){
 }
 
 function buildMap(){
+    data.map = data.map.transaction().clear().commit();
     data.items.forEach(function(item){
         var mapTransaction = data.map.transaction();
         var row = data.map.index(item.row);
