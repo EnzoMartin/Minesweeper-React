@@ -1,4 +1,4 @@
-var Modal = require('react-bootstrap').Modal;
+var Modal = require('react-bootstrap/lib/Modal');
 var React = require('react');
 
 var ModalItem = React.createClass({

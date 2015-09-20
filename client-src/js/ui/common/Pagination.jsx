@@ -1,5 +1,5 @@
 var React = require('react');
-var Pagination = require('react-bootstrap').Pagination;
+var Pagination = require('react-bootstrap/lib/Pagination');
 
 var PaginationWidget = React.createClass({
     getDefaultProps: function() {

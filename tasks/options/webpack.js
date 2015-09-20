@@ -11,6 +11,8 @@ module.exports = {
                     'NODE_ENV': '"production"'
                 }
             }),
+            new webpack.optimize.OccurenceOrderPlugin(true),
+            new webpack.optimize.DedupePlugin(),
             new webpack.optimize.UglifyJsPlugin()
         ].concat(webpackConfig.plugins),
         devtool: null

@@ -1,6 +1,6 @@
 var React = require('react');
-var TooltipBootstrap = require('react-bootstrap').Tooltip;
-var OverlayTriggerBootstrap = require('react-bootstrap').OverlayTrigger;
+var TooltipBootstrap = require('react-bootstrap/lib/Tooltip');
+var OverlayTriggerBootstrap = require('react-bootstrap/lib/OverlayTrigger');
 
 var Tooltip = React.createClass({
     propTypes: {
