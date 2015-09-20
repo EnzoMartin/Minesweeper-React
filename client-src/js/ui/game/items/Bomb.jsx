@@ -8,25 +8,40 @@ var Bomb = React.createClass({
     propTypes: {
         item: React.PropTypes.object.isRequired
     },
-    gameOver: function(){
-        ItemsActions.revealAllItems();
-        PlayerActions.gameOver(false);
+    shouldComponentUpdate: function(nextProps){
+        return nextProps.item !== this.props.item;
     },
-    flagItem: function(event){
+    _onGameOver: function(){
+        if(!this.props.item.isFlag){
+            ItemsActions.revealAllItems();
+            PlayerActions.gameOver(false);
+        }
+    },
+    _onFlagItem: function(event){
         event.preventDefault();
         event.stopPropagation();
         event.returnValue = false;
-        if(!this.props.item.isRevealed && ItemsStore.getFlags().length < PlayerStore.getOptions().totalBombs){
+        if(this.props.item.isFlag){
+            ItemsActions.toggleFlag(this.props.item,false);
+        } else if(!this.props.item.isRevealed && ItemsStore.getFlags().length < PlayerStore.getOptions().totalBombs){
             ItemsActions.toggleFlag(this.props.item,true);
         }
     },
     render: function() {
         var item = this.props.item;
-        var revealedClass = item.isRevealed? ' bomb revealed' : '';
-        var icon = item.isRevealed? (<i className="fa fa-bomb"/>) : null;
+        var revealedClass = null;
+        var icon = null;
+
+        if(item.isRevealed){
+            icon = (<i className="fa fa-bomb"/>);
+            revealedClass = ' bomb revealed';
+        } else if(item.isFlag) {
+            icon = (<i className="fa fa-flag"/>);
+            revealedClass = ' flag'
+        }
 
         return (
-            <td className={'item ' + revealedClass} onContextMenu={this.flagItem} onClick={this.gameOver}>{icon}</td>
+            <td className={'item ' + revealedClass} onContextMenu={this._onFlagItem} onClick={this._onGameOver}>{icon}</td>
         );
     }
 });

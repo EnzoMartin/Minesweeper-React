@@ -2,7 +2,6 @@ var React = require('react');
 var ItemsStore = require('../../../app/game/ItemsStore');
 
 var Item = require('./Item');
-var Flag = require('./Flag');
 var Bomb = require('./Bomb');
 
 var Items = React.createClass({
@@ -10,7 +9,7 @@ var Items = React.createClass({
         return {
             hasFetched: ItemsStore.hasFetched(),
             isFetching: ItemsStore.isFetching(),
-            items: ItemsStore.getMap()
+            items: ItemsStore.getItems()
         };
     },
     componentDidMount: function () {
@@ -23,23 +22,16 @@ var Items = React.createClass({
         this.setState({
             hasFetched: ItemsStore.hasFetched(),
             isFetching: ItemsStore.isFetching(),
-            items: ItemsStore.getMap()
+            items: ItemsStore.getItems()
         });
     },
     render: function() {
-        var rows = this.state.items.map(function(row,r){
-            var items = row.map(function(item){
-                var col = (<Item key={item.id} item={item}/>);
-                if(item.isFlag){
-                    col = (<Flag key={item.id} item={item}/>);
-                } else if(item.isBomb){
-                    col = (<Bomb key={item.id} item={item}/>);
-                }
-
-                return col;
-            });
-
-            return (<tr key={'row-' + r}>{items}</tr>);
+        var rows = this.state.items.reduce(function(rows,item){
+            rows[item.row] = rows[item.row] || [];
+            rows[item.row][item.col] = item.isBomb? (<Bomb key={item.id} item={item}/>) : (<Item key={item.id} item={item}/>);
+            return rows;
+        },[]).map(function(row,r){
+            return (<tr key={'row-' + r}>{row}</tr>);
         });
 
         return (
