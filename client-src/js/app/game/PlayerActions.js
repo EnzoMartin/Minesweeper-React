@@ -55,9 +55,9 @@ module.exports = {
         };
 
         if(previousOptions){
-            options.height = previousOptions.height;
-            options.width = previousOptions.width;
-            options.difficulty = previousOptions.difficulty;
+            options.height = previousOptions.height || options.height;
+            options.width = previousOptions.width || options.width;
+            options.difficulty = previousOptions.difficulty || options.difficulty;
         }
 
         var previousGame = {
@@ -80,7 +80,7 @@ module.exports = {
             });
         }
 
-        if(previousGame.items.length){
+        if(previousGame.items.length && options.height >= Definitions.Minimum.height && options.width >= Definitions.Minimum.width){
             Dispatcher.dispatch({
                 actionType: ItemsConstants.END_GENERATE_MAP_SUCCESS,
                 arguments: ItemsModelFactories.loadGame(options,previousGame.items)

@@ -73,9 +73,25 @@ var Header = React.createClass({
                             </select>
                         </div>
                         <div className="form-group">
-                            <input type="number" min="1" className="form-control" name="height" required={true} defaultValue={this.state.options.height} placeholder="Height" style={{width:80}}/>
+                            <input
+                                type="number"
+                                min={Definitions.Minimum.height}
+                                className="form-control"
+                                name="height"
+                                required={true}
+                                defaultValue={this.state.options.height}
+                                placeholder="Height"
+                                style={{width:80}}/>
                             <p className="form-control-static">Row(s) by</p>
-                            <input type="number" min="1" className="form-control" name="width" required={true} defaultValue={this.state.options.width} placeholder="Width" style={{width:80}}/>
+                            <input
+                                type="number"
+                                min={Definitions.Minimum.width}
+                                className="form-control"
+                                name="width"
+                                required={true}
+                                defaultValue={this.state.options.width}
+                                placeholder="Width"
+                                style={{width:80}}/>
                             <p className="form-control-static">Column(s)</p>
                             <button className="btn btn-primary" type="submit">{this.state.isPlaying? 'Restart' : 'Play!'}</button>
                         </div>

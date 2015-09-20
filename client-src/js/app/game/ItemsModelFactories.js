@@ -43,11 +43,13 @@ var ItemModel = Immutable.Model.extend(function ItemModel(data){
  * @property totalSquares Number
  */
 var OptionsModel = Immutable.Model.extend(function OptionsModel(data){
-    this.width = data.width;
-    this.height = data.height;
-    this.difficulty = data.difficulty;
-    this.totalBombs = data.totalBombs;
-    this.totalSquares = data.totalSquares;
+    var difficulty = Definitions.Difficulties[data.difficulty] || Definitions.Difficulties[1];
+
+    this.width = data.width < Definitions.Minimum.width? Definitions.Minimum.width : data.width;
+    this.height = data.height < Definitions.Minimum.height? Definitions.Minimum.height : data.height;
+    this.difficulty = difficulty.id;
+    this.totalSquares = data.totalSquares || Math.floor(this.width * this.height);
+    this.totalBombs = data.totalBombs || Math.floor(this.totalSquares * (difficulty.percent / 100));
 
     Immutable.Freezer.freeze(this);
 });
@@ -91,23 +93,20 @@ module.exports = {
      * @returns {{items: Array, options: {OptionsModel}}}
      */
     generateGame: function(width, height, difficulty) {
-        var items = [];
-        var h = 0;
-        var total = Math.floor(width * height);
-        var percent = Definitions.Difficulties[difficulty].percent;
-        var maxBombs = Math.floor(total * (percent / 100));
-
         var options = new OptionsModel({
             width:width,
             height:height,
-            difficulty:difficulty,
-            totalBombs:maxBombs,
-            totalSquares:total
+            difficulty:difficulty
         });
 
-        while(h < height){
+        var items = [];
+        var h = 0;
+        var totalSquares = options.totalSquares;
+        var totalBombs = options.totalBombs;
+
+        while(h < options.height){
             var w = 0;
-            while(w < width){
+            while(w < options.width){
                 items.push(new ItemModel({
                     row:h,
                     col:w
@@ -117,9 +116,9 @@ module.exports = {
             h++;
         }
 
-        while(maxBombs){
-            items[Math.floor(Math.random() * total)].isBomb = true;
-            maxBombs--;
+        while(totalBombs){
+            items[Math.floor(Math.random() * totalSquares)].isBomb = true;
+            totalBombs--;
         }
 
         items.forEach(function(item){
