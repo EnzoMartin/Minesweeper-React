@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== 'development'){
+    require('./modules/immutable').Freezer.disable();
+}
+
 var React = require('react');
 var Router = require('./modules/router');
 var Route = Router.statics.Route;
