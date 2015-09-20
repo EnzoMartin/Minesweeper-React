@@ -5,7 +5,7 @@ var Bomb = require('./Bomb');
 
 var Row = React.createClass({
     shouldComponentUpdate: function(nextProps){
-        return nextProps.items === this.props.items;
+        return nextProps.items !== this.props.items;
     },
     render: function() {
         var cols = this.props.items.map(function(item){
