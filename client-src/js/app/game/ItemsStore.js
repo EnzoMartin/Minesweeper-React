@@ -10,6 +10,7 @@ var ItemsStore = RegisteredStore.create('ItemsStore');
 var data = {
     isFetching:false,
     remaining:0,
+    map:Immutable.List(),
     flags:[],
     items:Immutable.Dictionary()
 };
@@ -70,6 +71,39 @@ function updateFlaggedItem(item){
     data.items = transaction.commit();
 }
 
+function buildMap(){
+    data.items.forEach(function(item){
+        var mapTransaction = data.map.transaction();
+        var row = data.map.index(item.row);
+
+        if(!row){
+            row = Immutable.List();
+            mapTransaction.add(item.row,row);
+        }
+
+        var transaction = row.transaction();
+        transaction.add(item.col,item);
+        row = transaction.commit();
+
+        mapTransaction.update(item.row,row);
+        data.map = mapTransaction.commit();
+    });
+}
+
+/**
+ * Update the map with the new item
+ * @param item {ItemModel|Object}
+ */
+function updateMapItem(item){
+    var row = data.map.index(item.row);
+
+    var transaction = row.transaction();
+    transaction.update(item.col,item);
+    row = transaction.commit();
+
+    data.map = data.map.transaction().update(item.row,row).commit();
+}
+
 function revealNeighbors(item){
     item.neighbors.forEach(function(id){
         var item = data.items.index(id);
@@ -86,6 +120,7 @@ function revealItem(item){
     transaction.update(updatedItem.id,updatedItem);
     data.items = transaction.commit();
     data.remaining--;
+    updateMapItem(updatedItem);
     persistAndEmitChange();
 
     if(!updatedItem.label){
@@ -104,6 +139,8 @@ function revealAllItems(){
         }
     });
     data.items = transaction.commit();
+
+    buildMap();
 }
 
 function _dispatcher(payload){
@@ -116,6 +153,7 @@ function _dispatcher(payload){
             data.isFetching = false;
             data.items = data.items.transaction().clear().commit();
             updateAllItems(payload);
+            buildMap();
             data.hasFetched = true;
             persistAndEmitChange();
             break;
@@ -134,6 +172,7 @@ function _dispatcher(payload){
             break;
         case ItemsConstants.TOGGLE_ITEM_FLAG:
             updateFlaggedItem(payload.arguments.items[0]);
+            updateMapItem(payload.arguments.items[0]);
             persistAndEmitChange();
             break;
     }
@@ -153,6 +192,9 @@ module.exports = ItemsStore.assign({
     },
     getItems:function(){
         return data.items;
+    },
+    getMap:function(){
+        return data.map;
     },
     getRemaining:function(){
         return data.remaining;
