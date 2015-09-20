@@ -2,8 +2,22 @@
 
 Minesweeper clone built in React
 
+* [Features](#features)
 * [First time install for Development](#first-time-install-for-development)
 * [Environment Variables](#environment-variables)
+
+# Features
+
+* Generates a map with bombs based off entered settings
+* Saves settings to localStorage
+* Saves in-progress game to localStorage and resumes when returning/refreshing
+* Win/loss condition and basic timer
+* Toggle Flags by right clicking
+ 
+### Possible future
+* Optimize large map generation
+* Generate seed/hash to share a generated map
+* Basic leaderboards for fun, possibly with Google+ sign-in
     
 # First time install for Development
 
@@ -15,7 +29,7 @@ Minesweeper clone built in React
 * Run `npm install` from the repo base directory
 * Run `grunt --force` to start the main grunt task that builds the CSS, etc.
 * Run `node app.js` to start the application
-* Navigate to [http:localhost:3000]
+* Navigate to [http:localhost:3000](http:localhost:3000)
 
 # Environment Variables
 | Name  | Description |
