@@ -54,6 +54,73 @@ var OptionsModel = Immutable.Model.extend(function OptionsModel(data){
     Immutable.Freezer.freeze(this);
 });
 
+/**
+ * Parse the seed to generate the map
+ * @param seed
+ * @returns {{width: Number, height: Number, difficulty: Number, items: Array}}
+ */
+var generateFromSeed = function(seed){
+    var width = seed.shift();
+    var height = seed.shift();
+    var difficulty = Math.floor(seed.shift() + height);
+
+    var map = new Array(width * height);
+    var index = 0;
+    var len = map.length;
+
+    while(index < len){
+        map[index] = {isBomb:false};
+        index++;
+    }
+
+    var row = -1;
+    var rowMultiplier = 0;
+    seed.forEach(function(col,i){
+        if(col == 0){
+            row++;
+            rowMultiplier = Math.floor(row * width);
+        } else {
+            map[(col + seed[i-1]) + rowMultiplier].isBomb = true;
+        }
+    });
+
+    return {
+        width: width,
+        height: Math.floor(height + width),
+        difficulty: difficulty,
+        items: map
+    };
+};
+
+/**
+ * Generate the seed of the current map
+ * @param optionsModel {OptionsModel}
+ * @param items Array
+ * @returns Array
+ */
+var generateSeed = function(optionsModel,items){
+    var width = optionsModel.width -1;
+    var height = optionsModel.height - optionsModel.width;
+    var difficulty = optionsModel.difficulty - height;
+
+    return items.reduce(function(seed,item){
+        if(item.isBomb){
+            seed.push(item.col - seed[seed.length-1]);
+        }
+
+        if(item.col == width){
+            seed.push(0);
+        }
+
+        return seed;
+    },[
+        optionsModel.width,
+        height,
+        difficulty,
+        0
+    ]);
+};
+
 module.exports = {
     /**
      * Re-create models from a save game
@@ -82,6 +149,7 @@ module.exports = {
 
         return {
             options: optionsModel,
+            seed: generateSeed(optionsModel,itemModels),
             items: itemModels
         }
     },
@@ -93,7 +161,7 @@ module.exports = {
      * @returns {{items: Array, options: {OptionsModel}}}
      */
     generateGame: function(width, height, difficulty) {
-        var options = new OptionsModel({
+        var optionsModel = new OptionsModel({
             width:width,
             height:height,
             difficulty:difficulty
@@ -101,12 +169,12 @@ module.exports = {
 
         var items = [];
         var h = 0;
-        var totalSquares = options.totalSquares;
-        var totalBombs = options.totalBombs;
+        var totalSquares = optionsModel.totalSquares;
+        var totalBombs = optionsModel.totalBombs;
 
-        while(h < options.height){
+        while(h < optionsModel.height){
             var w = 0;
-            while(w < options.width){
+            while(w < optionsModel.width){
                 items.push(new ItemModel({
                     row:h,
                     col:w
@@ -153,7 +221,8 @@ module.exports = {
 
         return {
             items:items,
-            options:options
+            seed: generateSeed(optionsModel,items),
+            options:optionsModel
         };
     },
     ItemModel: ItemModel,
